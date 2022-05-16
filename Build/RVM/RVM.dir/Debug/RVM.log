@@ -1,8 +1,0 @@
-﻿  RVM.cpp
-C:\Users\rycoo\Desktop\RVM\RVM\RVM.cpp(9,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\rycoo\Desktop\RVM\RVM\RVM.cpp(17,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\rycoo\Desktop\RVM\RVM\RVM.cpp(21,16): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\rycoo\Desktop\RVM\RVM\RVM.cpp(27,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\rycoo\Desktop\RVM\RVM\RVM.cpp(37,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\rycoo\Desktop\RVM\RVM\RVM.cpp(41,2): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-  RVM.vcxproj -> C:\Users\rycoo\Desktop\RVM\Build\RVM\Debug\RVM.exe
