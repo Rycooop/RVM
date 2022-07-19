@@ -6,6 +6,6 @@ Register::~Register() { this->ClearRegister(); }
 
 void Register::ClearRegister() { this->value = 0; }
 
-void Register::UpdateRegister(std::uintptr_t reg) { this->value = reg; }
+void Register::UpdateRegister(std::int32_t Val) { this->value = Val; }
 
-std::uintptr_t Register::GetValue() const { return this->value; }
+std::int32_t Register::GetValue() const { return this->value; }

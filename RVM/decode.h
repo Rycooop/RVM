@@ -1,22 +1,29 @@
 #ifndef RVM_DECODE_H
 #define RVM_DECODE_H
 
+#include <vector>
+#include <iterator>
+#include <algorithm>
+
+#include "execute.h"
 #include "mnemomic.h"
+#include "bit.h"
 #include "instruction.h"
 
+
+extern bool MachineRunning;
 
 class Decode
 {
 public:
-	Decode();
+	Decode(Registers& regs);
 	~Decode();
 
-	void Update(Instruction& currInstr) const;
+	void Interpret(Instruction& CurrInstruction);
 
 private:
-
-
-	Instruction* currInstruction;
+	Execute* c_Execute;
+	Instruction* CurrInstruction;
 
 };
 

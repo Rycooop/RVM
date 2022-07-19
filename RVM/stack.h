@@ -12,19 +12,18 @@ public:
 	Stack();
 	~Stack();
 
-	void Initialize(Register& StackRegister);
+	inline void PushToStack(std::uint32_t Value) { this->stack->push_back(Value); }
+	std::uint32_t GrabTopStack() { return this->stack->back(); }
+	inline void PopStack() { this->stack->pop_back(); }
 
-	std::uintptr_t GetStackPointer();
-
-	void StackAdd(std::uintptr_t push);
-	std::uintptr_t StackGrab();
-	void StackTake();
+	inline void PushReturnAddr(std::uint32_t RetAddr) { this->CallStack->push_back(RetAddr); }
+	inline std::uint32_t GetReturnAddr() { return this->CallStack->back(); }
 
 private:
-	void UpdateRSP(int move);
+	Register* c_Vsp;
 
-	Register* RSP;
-	std::vector<std::uintptr_t*> stack;
+	std::vector<std::uint32_t>* CallStack;
+	std::vector<std::uint32_t>* stack;
 };
 
 #endif //RVM_STACK_H

@@ -16,6 +16,7 @@
 //flushed as soon as execution returns
 
 #include "register.h"
+#include "mnemomic.h"
 
 
 class Registers
@@ -30,17 +31,19 @@ public:
 	Register& GetVIP();
 	Register& GetVSP();
 
-	Register* VR0;
-	Register* VR1;
-	Register* VR2;
-	Register* VR3;
-	Register* VR4;
+	Register* r_VR0;
+	Register* r_VR1;
+	Register* r_VR2;
+	Register* r_VR3;
+	Register* r_VR4;
+
+	Register* IsRegister(std::uint8_t Opcode);
 
 private:
 	void ClearRegisters();
 	
-	Register* VIP;
-	Register* VSP;
+	Register* r_VIP;
+	Register* r_VSP;
 };
 
 #endif //RVM_REGISTERS_H

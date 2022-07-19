@@ -1,23 +1,26 @@
 #include "header.h"
 
 
-Header::Header(char* FileHeader) { this->FileHeader = (FILE_HEADER*)FileHeader; }
+Header::Header(char* FileHeader)
+{
+	this->FileHeader = (FILE_HEADER*)FileHeader; 
+}
+
 Header::~Header() {};  
 
 
 bool Header::ParseHeader(HEADER_INFORMATION& info)
 {
-	if (!this->VerifyHeader())
-		return false;
-
-	//for redundancy
 	info.version = 0;
-	info.EntryPoint = 0; 
+	info.EntryPoint = 0;
+
+	if (!this->VerifyHeader(info))
+		return false;
 
 	return true;
 }
 
-bool Header::VerifyHeader()
+bool Header::VerifyHeader(HEADER_INFORMATION& hInfo)
 {
 	if (!this->FileHeader)
 		return false;
@@ -36,11 +39,15 @@ bool Header::VerifyHeader()
 		return false;
 	}
 
+	hInfo.version = RVM_VERSION;
+
 	if (!FileHeader->EntryPoint)
 	{
 		std::cout << "[-] Entry point not found" << std::endl;
 		return false;
 	}
+
+	hInfo.EntryPoint = FileHeader->EntryPoint;
 	std::cout << "[+] Entry Point Found: 0x" << std::hex << FileHeader->EntryPoint << std::endl;
 
 	return true;

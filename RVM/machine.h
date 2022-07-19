@@ -5,6 +5,8 @@
 // Following the basic Fetch - Decode - Execute sequence, I put together a very simple virtual machine that utillizes a stack and 7 registers
 // Plans for the future is to support more languages in the compiler, as well as more libraries
 
+// BIG ENDIAN
+
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -12,10 +14,8 @@
 
 #include "header.h"
 #include "registers.h"
-#include "stack.h"
 #include "decode.h"
 #include "fetch.h"
-#include "execute.h"
 
 
 class Machine
@@ -23,6 +23,8 @@ class Machine
 public:
 	Machine(char& FileStream);
 	~Machine();
+
+	static int CycleCount;
 
 	void Run();
 	void Shutdown();
@@ -32,7 +34,9 @@ private:
 
 	Header* c_FileHeader;
 	Registers* c_Registers;
-	Stack* c_Stack;
+	
+	Fetch* c_Fetch;
+	Decode* c_Decode;
 
 	char* file;
 	Header::HEADER_INFORMATION* HeaderInfo;

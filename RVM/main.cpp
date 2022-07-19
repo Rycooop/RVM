@@ -39,8 +39,8 @@ int main(int argc, const char* argv[])
 	Machine* RVM = new Machine(*buff);
 
 	RVM->Run();
-	RVM->Shutdown();
 
+	std::cout << "<MACHINE SHUTDOWN> Cycle Count: " << Machine::CycleCount << std::endl;
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 
 	return 0;

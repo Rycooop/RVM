@@ -9,13 +9,13 @@ class Register
 public:
 	Register();
 	~Register();
-	
+
 	void ClearRegister();
-	void UpdateRegister(std::uintptr_t reg);
-	std::uintptr_t GetValue() const;
+	void UpdateRegister(std::int32_t Val);
+	std::int32_t GetValue() const;
 
 private:
-	std::uintptr_t value;
+	std::uint32_t value;
 };
 
 #endif //RVM_REGISTER_H

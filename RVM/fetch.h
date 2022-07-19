@@ -8,15 +8,16 @@
 class Fetch
 {
 public:
-	Fetch(Register& rRip, char* inFile);
+	Fetch(Register& rRip, char& inFile);
 	~Fetch();
 
-	Instruction* GetCurrentInstruction() const;
-	void Update();
+	Instruction& GetPreviousInstruction() const noexcept;
+	[[nodiscard]] Instruction& GetNextInstruction() const noexcept;
 
 private:
+	std::vector<Instruction*> InstructionList;
 	Register* RIP;
-	char* file;
+	char* File;
 };
 
 #endif //RVM_FETCH_H

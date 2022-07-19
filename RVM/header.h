@@ -18,13 +18,13 @@ public:
 		char Signature[3];  //in all valid .RVM files the first three bytes should spell RVM, similar to the MZ in windows portable executable format
 		std::uint16_t version;
 		char p0[5];
-		std::uintptr_t EntryPoint;
+		std::uint32_t EntryPoint;
 	}FILE_HEADER;
 
 	typedef struct _HEADER_INFORMATION
 	{
 		std::uint16_t version;
-		std::uintptr_t EntryPoint;
+		std::uint32_t EntryPoint;
 		std::uint64_t FileSize;
 	}HEADER_INFORMATION;
 
@@ -32,7 +32,7 @@ public:
 	bool ParseHeader(HEADER_INFORMATION& info);
 
 private:
-	bool VerifyHeader();
+	bool VerifyHeader(HEADER_INFORMATION& hInfo);
 
 	FILE_HEADER* FileHeader;
 };
