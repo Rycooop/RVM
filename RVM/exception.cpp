@@ -5,7 +5,16 @@ Exception::Exception() {};
 
 Exception::~Exception() {};
 
-void Exception::ThrowException(std::uint8_t ExceptionCode)
+[[nodiscard]] bool Exception::ThrowException(std::uint8_t ExceptionCode) noexcept
 {
+	this->ExceptionCount++;
 
+	switch (ExceptionCode)
+	{
+
+		default:
+		{
+			return 0;
+		}
+	}
 }

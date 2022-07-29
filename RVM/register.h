@@ -10,6 +10,13 @@ public:
 	Register();
 	~Register();
 
+	//Operator Overloaders
+	Register operator+(const Register& ToAdd) const noexcept;
+	Register operator-(const Register& ToSub) const noexcept;
+	void operator++() noexcept;
+	void operator--() noexcept;
+	void operator+=(const int&& num) noexcept;
+
 	void ClearRegister();
 	void UpdateRegister(std::int32_t Val);
 	std::int32_t GetValue() const;

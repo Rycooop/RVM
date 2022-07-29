@@ -28,8 +28,9 @@ public:
 	void Initialize();
 	void Shutdown();
 
-	Register& GetVIP();
-	Register& GetVSP();
+	inline Register& GetVIP() noexcept { return *this->r_VIP; }
+	inline Register& GetVSP() noexcept { return *this->r_VSP; }
+	inline Register& GetVBP() noexcept { return *this->r_VBP; }
 
 	Register* r_VR0;
 	Register* r_VR1;
@@ -44,6 +45,7 @@ private:
 	
 	Register* r_VIP;
 	Register* r_VSP;
+	Register* r_VBP;
 };
 
 #endif //RVM_REGISTERS_H

@@ -10,6 +10,12 @@ Instruction::Instruction(char* rF, std::uint32_t Addr)
 
 Instruction::~Instruction() {};
 
+void Instruction::operator=(const Instruction& NewInstr)
+{
+	this->InstructionAddr = NewInstr.InstructionAddr;
+	this->RemainingBytes = NewInstr.RemainingBytes;
+}
+
 [[nodiscard]] std::uint8_t Instruction::GetInstruction() const noexcept
 {
 	for (int i = 1; i < 6; i++)

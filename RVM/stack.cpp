@@ -3,11 +3,17 @@
 
 Stack::Stack()
 {
-	this->CallStack = new std::vector<std::uint32_t>();
-	this->stack = new std::vector<std::uint32_t>();
-
-	//Push back 0 as the "return" address for the entry point function
-	this->CallStack->push_back(0);
 }
 
 Stack::~Stack() {};
+
+Stack::Stack(Register& VSP, Register& VBP, std::vector<std::int32_t> CommandArgs)
+{
+	std::vector<std::int32_t> BaseFrame;
+	BaseFrame.push_back(0); //Push back the return addr of 0 identifying the entry point function
+	
+	for (const auto& CurrArg : CommandArgs)
+		BaseFrame.push_back(CurrArg);
+
+	this->Frames.push_back(BaseFrame);
+}

@@ -15,6 +15,8 @@ public:
 	Instruction(char* rF, std::uint32_t Addr);
 	~Instruction();
 
+	void operator=(const Instruction& NewInstr);
+
 	[[nodiscard]] std::uint8_t GetInstruction() const noexcept;
 	std::vector<uint8_t>* GetRemainingBytes() const;
 

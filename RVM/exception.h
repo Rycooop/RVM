@@ -19,7 +19,7 @@ public:
 	Exception();
 	~Exception();
 
-	void ThrowException(std::uint8_t ExceptionCode);
+	[[nodiscard]] bool ThrowException(std::uint8_t ExceptionCode) noexcept;
 
 private:
 	int ExceptionCount;

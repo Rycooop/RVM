@@ -5,6 +5,7 @@
 #include <string>
 
 #include "stack.h"
+#include "library.h"
 #include "instruction.h"
 #include "registers.h"
 #include "exception.h"
@@ -18,11 +19,12 @@ public:
 
 
 	//Virtual Instructions --
-	void Hop(std::uint32_t AddrRel) noexcept;
-	void Fly(std::int32_t AddrAbs) noexcept;
+	void Hop(const std::uint32_t& AddrRel) noexcept;
+	void Fly(const std::int32_t& AddrAbs) noexcept;
 	void Reroute(std::vector<Instruction*> Arguments, std::uint32_t FunctionAddr) noexcept;
+	void Libcall(const std::uint8_t& ID) const noexcept;
 	void Return() noexcept;
-	void StackAdd(std::uint32_t Value) noexcept;
+	//void StackAdd(std::uint32_t Value) noexcept;
 	void Copy(std::uint8_t Reg, std::uint8_t Value) const noexcept;
 	void CleanRegister(std::uint8_t Reg) const noexcept;
 	void RegInc(std::uint8_t Reg) const noexcept;
@@ -34,6 +36,7 @@ public:
 	void Multiply(std::uint8_t Product, std::int32_t n2) const noexcept;
 	void Divide(std::uint8_t Quotient, std::int32_t n2) const noexcept;
 
+	void ThrowException(const std::uint8_t&& ExceptionCode) const noexcept;
 	void UnknownInstruction() noexcept;
 
 	template <typename Type> Type AddVals(Type n1, Type n2);
@@ -43,7 +46,7 @@ private:
 	Exception* c_Exception;
 	Stack* c_Stack;
 
-	void Print(std::string* Message);
+	void PrintCon(const std::string& Message);
 };
 
 

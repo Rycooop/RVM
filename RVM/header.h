@@ -16,9 +16,9 @@ public:
 	typedef struct _FILE_HEADER
 	{
 		char Signature[3];  //in all valid .RVM files the first three bytes should spell RVM, similar to the MZ in windows portable executable format
-		std::uint16_t version;
+		std::uint16_t version; //Version of the compiler to make sure it is compatable with the virtual machine
 		char p0[5];
-		std::uint32_t EntryPoint;
+		std::uint32_t EntryPoint; //Entry point function
 	}FILE_HEADER;
 
 	typedef struct _HEADER_INFORMATION

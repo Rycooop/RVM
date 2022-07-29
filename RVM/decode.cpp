@@ -42,6 +42,11 @@ void Decode::Interpret(Instruction& CurrInstruction)
 			this->c_Execute->Fly(AbsAddr);
 			return;
 		}
+		case LIBCALL:
+		{
+			this->c_Execute->Libcall(RemainingBytes->front());
+			break;
+		}
 		case RETURN:
 		{
 			this->c_Execute->Return();

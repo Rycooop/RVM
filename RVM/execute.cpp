@@ -5,9 +5,11 @@ bool MachineRunning = true;
 
 Execute::Execute(Registers& Regs)
 {
+	std::vector<std::int32_t> ProgramArgs;
+
 	this->c_Regs = &Regs;
 	this->c_Exception = new Exception();
-	this->c_Stack = new Stack();
+	this->c_Stack = new Stack(this->c_Regs->GetVSP(), this->c_Regs->GetVBP(), ProgramArgs);
 }
 
 Execute::~Execute()
@@ -16,7 +18,7 @@ Execute::~Execute()
 	this->c_Exception->~Exception();
 }
 
-void Execute::Hop(std::uint32_t AddrRel) noexcept
+void Execute::Hop(const std::uint32_t& AddrRel) noexcept
 {
 	std::uint32_t CurrAddr = this->c_Regs->GetVIP().GetValue();
 
@@ -30,35 +32,35 @@ void Execute::Hop(std::uint32_t AddrRel) noexcept
 	}
 }
 
-void Execute::Fly(std::int32_t AddrAbs) noexcept
+void Execute::Fly(const std::int32_t& AddrAbs) noexcept
 {
 	this->c_Regs->GetVIP().UpdateRegister(AddrAbs);
 }
 
 void Execute::Reroute(std::vector<Instruction*> Arguments, std::uint32_t FunctionAddr) noexcept
 {
-	for (Instruction* currArg : Arguments)
-	{
-		if (currArg->GetInstruction() == STACKADD)
-			this->c_Stack->PushToStack(currArg->GetRemainingBytes()->at(1));
-	}
 
 	//Push the return address onto the stack
-	this->c_Stack->PushReturnAddr((std::uint32_t)(this->c_Regs->GetVIP().GetValue() + 4));
 	
+}
+
+void Execute::Libcall(const std::uint8_t& ID) const noexcept
+{
+	switch (ID)
+	{
+	case LibPrint:
+	{
+
+	}
+	}
 }
 
 void Execute::Return() noexcept
 {
-	if (this->c_Stack->GetReturnAddr() == 0)
+	if (this->c_Stack->GetRetAddr() == 0)
 		MachineRunning = false;
 	
-	this->c_Regs->GetVIP().UpdateRegister(this->c_Stack->GetReturnAddr());
-}
-
-void Execute::StackAdd(std::uint32_t Value) noexcept
-{
-	this->c_Stack->PushToStack(Value);
+	this->c_Regs->GetVIP().UpdateRegister(this->c_Stack->GetRetAddr());
 }
 
 void Execute::Copy(std::uint8_t Reg, std::uint8_t Value) const noexcept
@@ -70,7 +72,7 @@ void Execute::Copy(std::uint8_t Reg, std::uint8_t Value) const noexcept
 	std::cout << "Copying: " << Value << std::endl;
 	TargetReg->UpdateRegister(Value);
 	
-	this->c_Regs->GetVIP().UpdateRegister(this->c_Regs->GetVIP().GetValue() + 5);
+	this->c_Regs->GetVIP() += 5;
 }
 
 void Execute::CleanRegister(std::uint8_t Reg) const noexcept
@@ -85,8 +87,8 @@ void Execute::RegInc(std::uint8_t Reg) const noexcept
 	if (!R)
 		return;
 
-	R->UpdateRegister(R->GetValue() + 1);
-	this->c_Regs->GetVIP().UpdateRegister(this->c_Regs->GetVIP().GetValue() + 2);
+	R++;
+	this->c_Regs->GetVIP() += 2;
 }
 
 void Execute::RegSub(std::uint8_t Reg) const noexcept
@@ -95,8 +97,8 @@ void Execute::RegSub(std::uint8_t Reg) const noexcept
 	if (!R)
 		return;
 
-	R->UpdateRegister(R->GetValue() - 1);
-	this->c_Regs->GetVIP().UpdateRegister(this->c_Regs->GetVIP().GetValue() + 2);
+	R--;
+	this->c_Regs->GetVIP() += 2;
 }
 
 void Execute::Add(std::uint8_t SumReg, std::int32_t n2) const noexcept
@@ -109,16 +111,14 @@ void Execute::Add(std::uint8_t SumReg, std::int32_t n2) const noexcept
 	{
 		std::cout << "Added: " << (int)n1->GetValue() << " + " << (int)Reg2->GetValue() << std::endl;
 		n1->UpdateRegister(n1->GetValue() + Reg2->GetValue());
-		this->c_Regs->GetVIP().UpdateRegister(this->c_Regs->GetVIP().GetValue() + 2);
+		this->c_Regs->GetVIP() += 2;
 	}
 	else
 	{
 		std::cout << "Added: " << (int)n1->GetValue() << " + " << (int)n2 << std::endl;
 		n1->UpdateRegister(n1->GetValue() + n2);
-		this->c_Regs->GetVIP().UpdateRegister(this->c_Regs->GetVIP().GetValue() + 5);
+		this->c_Regs->GetVIP() += 5;
 	}
-
-	//Increment VIP by 4
 }
 
 void Execute::Subtract(std::uint8_t DiffReg, std::int32_t n2) const noexcept
@@ -131,13 +131,13 @@ void Execute::Subtract(std::uint8_t DiffReg, std::int32_t n2) const noexcept
 	{
 		std::cout << "Subtracted: " << n1->GetValue() << " - " << Reg2->GetValue() << std::endl;
 		n1->UpdateRegister(n1->GetValue() - Reg2->GetValue());
-		this->c_Regs->GetVIP().UpdateRegister(this->c_Regs->GetVIP().GetValue() + 2);
+		this->c_Regs->GetVIP() += 2;
 	}
 	else
 	{
 		std::cout << "Subtracted: " << n1->GetValue() << " - " << (int)n2 << std::endl;
 		n1->UpdateRegister(n1->GetValue() - n2);
-		this->c_Regs->GetVIP().UpdateRegister(this->c_Regs->GetVIP().GetValue() + 5);
+		this->c_Regs->GetVIP() += 5;
 	}
 
 }
@@ -152,13 +152,13 @@ void Execute::Multiply(std::uint8_t Product, std::int32_t n2) const noexcept
 	{
 		std::cout << "Multiplied: " << (int)n1->GetValue() << " * " << (int)Reg2->GetValue() << std::endl;
 		n1->UpdateRegister(n1->GetValue() * Reg2->GetValue());
-		this->c_Regs->GetVIP().UpdateRegister(this->c_Regs->GetVIP().GetValue() + 2);
+		this->c_Regs->GetVIP() += 2;
 	}
 	else
 	{
 		std::cout << "Multiplied: " << (int)n1->GetValue() << " * " << (int)n2 << std::endl;
 		n1->UpdateRegister(n1->GetValue() * n2);
-		this->c_Regs->GetVIP().UpdateRegister(this->c_Regs->GetVIP().GetValue() + 5);
+		this->c_Regs->GetVIP() += 5;
 	}
 
 }
@@ -171,10 +171,15 @@ void Execute::Divide(std::uint8_t Quotient, std::int32_t n2) const noexcept
 
 	if (n2 == 0x0)
 	{
-		this->c_Exception->ThrowException(EXCEPTION_DIVIDE_BY_ZERO);
-		MachineRunning = false;
+		this->ThrowException(EXCEPTION_DIVIDE_BY_ZERO);
 		return;
 	}
+}
+
+void Execute::ThrowException(const std::uint8_t&& ExceptionCode) const noexcept
+{
+	if (!this->c_Exception->ThrowException(ExceptionCode))
+		MachineRunning = false;
 }
 
 void Execute::UnknownInstruction() noexcept
@@ -188,3 +193,7 @@ template <typename Type> Type Execute::AddVals(Type n1, Type n2)
 	return 0;
 }
 
+void Execute::PrintCon(const std::string& Message)
+{
+	std::cout << Message << std::endl;
+}
