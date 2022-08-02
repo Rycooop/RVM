@@ -28,13 +28,14 @@ enum InstructionSet
 	//Virtual Registers
 	VIP = 0xA0,
 	VSP = 0xA1,
+	VRRET = 0xBB, //This register will always be used to hold the return address of a function
 
 	//Multi Purpose registers
 	VR0 = 0xA2,
 	VR1 = 0xA3,
 	VR2 = 0xA4,
 	VR3 = 0xA5,
-	VR4 = 0xA6
+	VR4 = 0xA6,
 };
 
 #endif //RVM_MNEMONIC_H

@@ -16,6 +16,7 @@ public:
 	void operator++() noexcept;
 	void operator--() noexcept;
 	void operator+=(const int&& num) noexcept;
+	void operator-=(const int&& num) noexcept;
 
 	void ClearRegister();
 	void UpdateRegister(std::int32_t Val);

@@ -9,7 +9,7 @@ Execute::Execute(Registers& Regs)
 
 	this->c_Regs = &Regs;
 	this->c_Exception = new Exception();
-	this->c_Stack = new Stack(this->c_Regs->GetVSP(), this->c_Regs->GetVBP(), ProgramArgs);
+	this->c_Stack = new Stack(this->c_Regs, this->c_Regs->GetVSP(), this->c_Regs->GetVBP(), ProgramArgs);
 }
 
 Execute::~Execute()
@@ -39,8 +39,7 @@ void Execute::Fly(const std::int32_t& AddrAbs) noexcept
 
 void Execute::Reroute(std::vector<Instruction*> Arguments, std::uint32_t FunctionAddr) noexcept
 {
-
-	//Push the return address onto the stack
+	this->c_Regs->r_VRRET->UpdateRegister(this->c_Regs->GetVIP().GetValue());
 	
 }
 
@@ -57,10 +56,22 @@ void Execute::Libcall(const std::uint8_t& ID) const noexcept
 
 void Execute::Return() noexcept
 {
-	if (this->c_Stack->GetRetAddr() == 0)
+	std::int32_t RetAddr = this->c_Regs->r_VRRET->GetValue();
+	
+	if (RetAddr == 0)
 		MachineRunning = false;
 	
-	this->c_Regs->GetVIP().UpdateRegister(this->c_Stack->GetRetAddr());
+	this->c_Regs->GetVIP().UpdateRegister(RetAddr);
+}
+
+void Execute::StackAdd(std::uint8_t Reg) noexcept
+{
+	this->c_Stack->StackAdd(Reg);
+}
+
+void Execute::StackGrab(std::uint8_t Reg) noexcept
+{
+	this->c_Stack->StackGrab(Reg);
 }
 
 void Execute::Copy(std::uint8_t Reg, std::uint8_t Value) const noexcept

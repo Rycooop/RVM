@@ -22,6 +22,7 @@ void Register::operator++() noexcept { this->UpdateRegister(this->value + 1); }
 void Register::operator--() noexcept { this->UpdateRegister(this->value - 1); }
 
 void Register::operator+=(const int&& num) noexcept { this->UpdateRegister(this->value + num); }
+void Register::operator-=(const int&& num) noexcept { this->UpdateRegister(this->value - num); };
 
 void Register::ClearRegister() { this->value = 0; }
 

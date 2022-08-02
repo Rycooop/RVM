@@ -16,6 +16,7 @@ public:
 	~Instruction();
 
 	void operator=(const Instruction& NewInstr);
+	inline void operator+=(const std::uint8_t& Arg) { this->RemainingBytes->push_back(Arg); }
 
 	[[nodiscard]] std::uint8_t GetInstruction() const noexcept;
 	std::vector<uint8_t>* GetRemainingBytes() const;

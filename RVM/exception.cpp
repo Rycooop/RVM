@@ -5,9 +5,14 @@ Exception::Exception() {};
 
 Exception::~Exception() {};
 
+void Exception::operator<<(const std::uint8_t& ExceptionCode) noexcept
+{
+	
+}
+
 [[nodiscard]] bool Exception::ThrowException(std::uint8_t ExceptionCode) noexcept
 {
-	this->ExceptionCount++;
+	*this << ExceptionCode;
 
 	switch (ExceptionCode)
 	{
@@ -17,4 +22,5 @@ Exception::~Exception() {};
 			return 0;
 		}
 	}
+
 }

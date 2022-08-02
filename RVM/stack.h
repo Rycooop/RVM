@@ -4,7 +4,11 @@
 #include <vector>
 
 #include "mnemomic.h"
-#include "register.h"
+#include "registers.h"
+
+
+//The stack pointer(VSP) and base pointer(VBP) are an index position rather than a address. This allows for the use of a 2d vector
+//array to act as the stack and the index positions to constantly be updated
 
 class Stack
 {
@@ -12,14 +16,15 @@ public:
 	Stack();
 	~Stack();
 
-	Stack(Register& VSP, Register& VBP, std::vector<std::int32_t> CommandArgs);
+	Stack(Registers* c_Regs, Register& VSP, Register& VBP, std::vector<std::int32_t> CommandArgs);
 
-	inline void Push(const std::int32_t Val);
-	std::int32_t Pop();
-
-	inline std::uint32_t GetRetAddr() const noexcept { return this->Frames.back().front(); }
+	void StackAdd(const std::uint8_t Reg) noexcept;
+	void StackGrab(const std::uint8_t Reg) noexcept;
 
 private:
+	Registers* c_Regs;
+	Register* VSP;
+	Register* VBP;
 	std::vector<std::vector<std::int32_t>> Frames;
 };
 

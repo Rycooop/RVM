@@ -18,7 +18,7 @@ Instruction& Fetch::GetPreviousInstruction() const noexcept { return *this->Inst
 	CurrRIP++, CycleCount++;
 
 	Instruction* NextInstruction = new Instruction(this->File, CurrRIP);
-	std::cout << "<INSTRUCTION FETCHED> Cycle: " << CycleCount << " Curr Instruction: " << std::hex << (int)NextInstruction->GetInstruction() << std::endl;
+	std::cout << "<INSTRUCTION FETCHED> Cycle: " << std::dec << CycleCount << " Curr Instruction: " << std::hex << (int)NextInstruction->GetInstruction() << std::endl;
 
 	this->RIP->UpdateRegister(CurrRIP);
 	return *NextInstruction;

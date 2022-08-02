@@ -3,7 +3,7 @@
 
 int main(int argc, const char* argv[])
 {
-	std::fstream eFileStream;
+	std::ifstream eFileStream;
 	std::string fPath;
 
 	if (argc > 1)
@@ -14,9 +14,8 @@ int main(int argc, const char* argv[])
 	}
 	else
 	{
-		std::cout << "[*] Enter executable file path: ";
-		std::cin >> fPath;
-		eFileStream.open(fPath.c_str(), std::fstream::in | std::ifstream::binary);
+		std::cout << "[*] Must pass through a file to execute" << std::endl;
+		return -1;
 	}
 
 

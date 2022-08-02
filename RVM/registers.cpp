@@ -9,6 +9,7 @@ void Registers::Initialize()
 	this->r_VIP = new Register();
 	this->r_VSP = new Register();
 	this->r_VBP = new Register();
+	this->r_VRRET = new Register();
 	this->r_VR0 = new Register();
 	this->r_VR1 = new Register();
 	this->r_VR2 = new Register();
@@ -21,6 +22,7 @@ void Registers::Shutdown()
 	this->r_VIP->~Register();
 	this->r_VSP->~Register();
 	this->r_VBP->~Register();
+	this->r_VRRET->~Register();
 	this->r_VR0->~Register();
 	this->r_VR1->~Register();
 	this->r_VR2->~Register();
@@ -33,6 +35,7 @@ void Registers::ClearRegisters()
 	r_VIP->ClearRegister();
 	r_VSP->ClearRegister();
 	r_VBP->ClearRegister();
+	r_VRRET->ClearRegister();
 	r_VR0->ClearRegister();
 	r_VR1->ClearRegister();
 	r_VR2->ClearRegister();

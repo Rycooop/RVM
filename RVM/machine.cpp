@@ -3,12 +3,14 @@
 
 int Machine::CycleCount = 0;
 
+
+Machine::Machine() {};
+Machine::~Machine() {};
+
 Machine::Machine(char& FileStream)
 {
 	this->file = &FileStream; 
 }
-
-Machine::~Machine() {};
 
 void Machine::Run()
 {
@@ -21,7 +23,7 @@ void Machine::Run()
 	while (MachineRunning /* running*/)
 	{
 		this->c_Decode->Interpret(this->c_Fetch->GetNextInstruction());
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		std::this_thread::sleep_for(std::chrono::milliseconds(40));
 		Machine::CycleCount++;
 	}
 

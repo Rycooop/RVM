@@ -2,6 +2,8 @@
 #define RVM_EXCEPTION_H
 
 #include <iostream>
+#include <vector>
+#include <string>
 
 
 enum Exceptions
@@ -19,10 +21,12 @@ public:
 	Exception();
 	~Exception();
 
+	void operator<<(const std::uint8_t& ExceptionCode) noexcept;
+
 	[[nodiscard]] bool ThrowException(std::uint8_t ExceptionCode) noexcept;
 
 private:
-	int ExceptionCount;
+	std::vector<std::string> ExceptionInfo;
 };
 
 

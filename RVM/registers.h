@@ -37,6 +37,7 @@ public:
 	Register* r_VR2;
 	Register* r_VR3;
 	Register* r_VR4;
+	Register* r_VRRET;
 
 	Register* IsRegister(std::uint8_t Opcode);
 

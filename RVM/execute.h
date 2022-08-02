@@ -24,7 +24,8 @@ public:
 	void Reroute(std::vector<Instruction*> Arguments, std::uint32_t FunctionAddr) noexcept;
 	void Libcall(const std::uint8_t& ID) const noexcept;
 	void Return() noexcept;
-	//void StackAdd(std::uint32_t Value) noexcept;
+	void StackAdd(std::uint8_t Reg) noexcept;
+	void StackGrab(std::uint8_t Reg) noexcept;
 	void Copy(std::uint8_t Reg, std::uint8_t Value) const noexcept;
 	void CleanRegister(std::uint8_t Reg) const noexcept;
 	void RegInc(std::uint8_t Reg) const noexcept;

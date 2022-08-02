@@ -21,8 +21,10 @@
 class Machine
 {
 public:
-	Machine(char& FileStream);
+	Machine();
 	~Machine();
+	Machine(char& FileStream);
+
 
 	static int CycleCount;
 

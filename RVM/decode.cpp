@@ -93,7 +93,7 @@ void Decode::Interpret(Instruction& CurrInstruction)
 		case MUL:
 		{
 			std::uint8_t ProductReg = RemainingBytes->front();
-			std::uint32_t ArgToInt;
+			std::int32_t ArgToInt;
 			memcpy(&ArgToInt, &RemainingBytes->at(1), 4);
 
 			this->c_Execute->Multiply(ProductReg, ArgToInt);
@@ -101,7 +101,11 @@ void Decode::Interpret(Instruction& CurrInstruction)
 		}
 		default:
 		{
+#ifdef _DEBUG
+			std::cout << "Executing Unknown instruction..." << std::endl;
+#else //_DEBUG
 			//this->c_Execute->UnknownInstruction();
+#endif
 			break;
 		}
 	}
