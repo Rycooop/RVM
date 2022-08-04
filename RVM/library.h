@@ -13,7 +13,9 @@ namespace Library
 	template <typename CType>
 	inline bool Compare(const CType& n1, const CType& n2) { return n1 == n2; }
 
-	std::string substr(const std::string& str1, const std::string&& substr);
+	std::vector<std::string> Delimate(const std::string& str1, const char delimater);
+
+	std::string Strip(std::string ToStrip);
 }
 
 enum LibIDs

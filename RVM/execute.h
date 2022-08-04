@@ -27,6 +27,8 @@ public:
 	void StackAdd(std::uint8_t Reg) noexcept;
 	void StackGrab(std::uint8_t Reg) noexcept;
 	void Copy(std::uint8_t Reg, std::uint8_t Value) const noexcept;
+	void Compare(std::uint8_t Reg1, std::uint8_t Reg2) noexcept;
+	void Empty() const noexcept;
 	void CleanRegister(std::uint8_t Reg) const noexcept;
 	void RegInc(std::uint8_t Reg) const noexcept;
 	void RegSub(std::uint8_t Reg) const noexcept;
@@ -54,5 +56,5 @@ private:
 //Instantiate all templates with functionality defined in execute.cpp
 template std::uint8_t Execute::AddVals<std::uint8_t>(std::uint8_t, std::uint8_t);
 
-#endif //RVM_EXECUTE_H
+#endif //RVM_EXECUTE_
 

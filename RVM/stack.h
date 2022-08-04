@@ -21,6 +21,8 @@ public:
 	void StackAdd(const std::uint8_t Reg) noexcept;
 	void StackGrab(const std::uint8_t Reg) noexcept;
 
+	std::vector<std::int32_t>* GetCurrentFrame();
+
 private:
 	Registers* c_Regs;
 	Register* VSP;

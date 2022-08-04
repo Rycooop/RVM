@@ -6,12 +6,23 @@ void Library::Print(const std::string& Str) noexcept
 	std::cout << Str.c_str() << std::endl;
 }
 
-std::string Library::substr(const std::string& str1, const std::string&& substr)
+std::vector<std::string> Library::Delimate(const std::string& str1, const char delimater)
 {
-	std::string Substring = "";
+	std::vector<std::string> Contains;
 
-	if (int pos = str1.find(substr))
-		Substring = str1[pos];
+	for (int i = 0; i < str1.length(); i++) {
+		if (str1[i] == delimater) {
+			std::string curr(str1.begin(), str1.begin() + i);
+			Contains.push_back(curr);
+		}
+	}
 
-	return Substring;
+	return Contains;
+}
+
+std::string Library::Strip(std::string ToStrip)
+{
+	ToStrip.erase(std::remove(ToStrip.begin(), ToStrip.end(), ' '), ToStrip.end());
+
+	return ToStrip;
 }

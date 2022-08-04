@@ -40,6 +40,7 @@ public:
 	Register* r_VRRET;
 
 	Register* IsRegister(std::uint8_t Opcode);
+	std::uint8_t GetEmptyRegister();
 
 private:
 	void ClearRegisters();

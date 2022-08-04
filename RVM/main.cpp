@@ -9,7 +9,7 @@ int main(int argc, const char* argv[])
 	if (argc > 1)
 	{
 		fPath = argv[1];
-		eFileStream.open(argv[1], std::fstream::in | std::ifstream::binary);
+		eFileStream.open(argv[1], std::ifstream::in | std::ifstream::binary);
 		std::cout << "[*] Opening " << argv[1] << " for execution..." << std::endl;
 	}
 	else
@@ -38,6 +38,7 @@ int main(int argc, const char* argv[])
 	Machine* RVM = new Machine(*buff);
 
 	RVM->Run();
+	delete RVM;
 
 	std::cout << "<MACHINE SHUTDOWN> Cycle Count: " << Machine::CycleCount << std::endl;
 	std::this_thread::sleep_for(std::chrono::seconds(2));

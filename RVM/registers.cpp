@@ -57,3 +57,18 @@ Register* Registers::IsRegister(std::uint8_t Opcode)
 		return this->r_VR4;
 	else return NULL;
 }
+
+std::uint8_t Registers::GetEmptyRegister()
+{
+	if (this->r_VR0->GetValue() == 0)
+		return VR0;
+	else if (this->r_VR1->GetValue() == 0)
+		return VR1;
+	else if (this->r_VR2->GetValue() == 0)
+		return VR2;
+	else if (this->r_VR3->GetValue() == 0)
+		return VR3;
+	else if (this->r_VR4->GetValue() == 0)
+		return VR4;
+	else return NULL;
+}

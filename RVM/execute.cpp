@@ -45,11 +45,29 @@ void Execute::Reroute(std::vector<Instruction*> Arguments, std::uint32_t Functio
 
 void Execute::Libcall(const std::uint8_t& ID) const noexcept
 {
+	this->c_Regs->r_VRRET->UpdateRegister(this->c_Regs->GetVIP().GetValue() + 2);
+
 	switch (ID)
 	{
 	case LibPrint:
 	{
+		if (std::uint8_t empty = this->c_Regs->GetEmptyRegister()) {
+			Register* reg = this->c_Regs->IsRegister(empty);
+			this->c_Stack->StackGrab(empty);
 
+			/*
+			*  Needs to be able to read from a memory chunk top continue - TODO: setup data system
+			* 
+			std::string* str = reg->GetValue();
+			Library::Print(*str);
+			*/
+		}
+		else {
+			this->c_Stack->StackAdd(VR0);
+			Register* reg = this->c_Regs->IsRegister(VR0);
+			
+
+		}
 	}
 	}
 }
@@ -84,6 +102,27 @@ void Execute::Copy(std::uint8_t Reg, std::uint8_t Value) const noexcept
 	TargetReg->UpdateRegister(Value);
 	
 	this->c_Regs->GetVIP() += 5;
+}
+
+void Execute::Compare(std::uint8_t Reg1, std::uint8_t Reg2) noexcept
+{
+	Register* R1 = this->c_Regs->IsRegister(Reg1);
+	Register* R2 = this->c_Regs->IsRegister(Reg2);
+
+	if (!R1 || !R2)
+		this->ThrowException(EXCEPTION_BADREGISTER);
+
+	if (R1->GetValue() == R2->GetValue()) {
+		this->c_Regs->r_VR4->UpdateRegister(1);
+	}
+	else this->c_Regs->r_VR4->ClearRegister();
+
+	this->c_Regs->GetVIP() += 3;
+}
+
+void Execute::Empty() const noexcept
+{
+	this->c_Regs->GetVIP() += 1;
 }
 
 void Execute::CleanRegister(std::uint8_t Reg) const noexcept

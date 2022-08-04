@@ -49,3 +49,11 @@ void Stack::StackGrab(const std::uint8_t Reg) noexcept
 		this->VBP--;
 	}
 }
+
+std::vector<std::int32_t>* Stack::GetCurrentFrame()
+{
+	if (this->Frames.back().size() > 0) {
+		return &this->Frames.back();
+	}
+	else return &this->Frames.at(this->Frames.size() - 2);
+}
